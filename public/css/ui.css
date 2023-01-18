@@ -1,0 +1,380 @@
+        #foot{
+            position: fixed;
+            bottom: 0px;
+            left: 0%;
+            width:100%;
+            height: 50px;
+            background: white;
+        }
+        .footimg{
+            position: absolute;
+            width: 23px;
+            bottom: 13px;
+        }
+        #footimg1{
+            left: 7%;
+        }
+        #footimg2{
+            left: 27%;
+        }
+        #footimg3{
+            left: 47%;
+        }
+        #footimg4{
+            left: 67%;
+        }
+        #footimg5{
+            left: 87%;
+        }
+        .footdiv{
+            position: absolute;
+            width:20%;
+            height:100%;
+        }
+        #footdiv1{
+            left:0%;
+        }
+        #footdiv2{
+            left:20%;
+        }
+        #footdiv3{
+            left:40%;              
+        }
+        #footdiv4{
+            left:60%;
+        }
+        #footdiv5{
+            left:80%;
+        }
+        #loginPg{
+            position: fixed;
+            width:100%;
+            height: 100%;
+            left: 0%;
+            top:0px;
+            background: rgb(1,188,55);
+        }
+        #loginPg2{
+            position: fixed;
+            width:100%;
+            height: 100%;
+            left: 0%;
+            top:0px;
+            background: white;
+        }        
+        #logo{
+            width: 75px;
+            top: 15%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            border:2px solid rgb(1,188,55);
+        }
+        #loginPg_login{
+            position: absolute;
+            top:40%;
+            width: 100%;
+            height: 60%;
+            
+        }
+        #loginPg2 input[type=text],#loginPg2 input[type=password] {
+            position: absolute;
+            left: 10%;
+            width: 80%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border-bottom: 2px solid rgba(100,100,100,0.28);
+            border-radius: 0%;
+            background: white;
+            -webkit-transition: 0.5s;
+            transition: 0.5s;
+            outline: none;
+            height: 30px;
+            top: 120px;
+            color: black;
+            text-shadow: 0px 0px white;
+        }
+        #loginPg2 input[type=password]{
+            top:180px;
+        }
+        #loginPg2 input[type=text]:focus,#loginPg2 input[type=password]:focus {
+            border-bottom: 2px solid rgb(1,188,55);
+        }
+        #loginPg_loginbtn{
+            position: absolute;
+            width: 80%;
+            left: 10%;
+            top:20%;
+            height: 35px;
+            border: 1px solid green;
+            font-size: 20px;
+            color: white;
+            text-shadow: 0px 0px rgb(1,188,55);
+            font-family: sans-serif;
+            text-align: center;
+            margin: auto;
+            border-radius: 20px;
+        }
+        #loginPg_signupbtn{
+            position: absolute;
+            width: 80%;
+            left: 10%;
+            bottom:10%;
+            height: 35px;
+            border: 1px solid green;
+            font-size: 20px;
+            color: white;
+            text-shadow: 0px 0px rgb(1,188,55);
+            font-family: sans-serif;
+            text-align: center;
+            border-radius: 20px;
+            
+        }
+        #loginPg2_space{
+            width:100%;
+            position: absolute;
+            top: 0%;
+            height:200px;
+            background:white;
+        }
+        #loginPg2_leftbtn{
+            position: absolute;
+            left:5px;
+            width: 35px;
+            top: 5px;
+        }
+        #loginPg2_logo{
+            position: absolute;
+            left:40%;
+            width: 75px;
+            top: 10;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #loginPg2_okbtn{
+            position: absolute;
+            top:240px;
+            width:60px;
+            right: 10%;
+        }
+        #signupPg{
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width:100%;
+            height: 100%;
+            background: white;
+        }
+        #signupPg_header{
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 30px;
+            background: green;
+        }
+        #signupPg_leftarrow{
+            position: absolute;
+            width: 35px;
+            top: 5px;
+            left: 5px;
+        }
+        #signupPg_leftbtn{
+            position: absolute;
+            width: 20%;
+            left: 0%;
+            height: 100%;
+        }
+        #pp{
+            position: absolute;
+            top:0%;
+            left:0%;
+            background:rgb(1,188,55);
+            height: 150px;
+            width:100%;
+        }
+        #postarea3{
+            width:100%;
+            height: 100%;
+            position: relative;
+            top: 0%;
+            left: 0%;
+        }
+        #header{
+            width:100%;
+            height: 50px;
+            position: relative;
+            top:0;
+            left:0;
+            
+        }
+        #header_img{
+            width:30px;
+            top:10px;
+            left:12px;
+            position: absolute;
+        }
+        #header_username{
+            width:auto;
+            font-size: 15px;
+            position: absolute;
+            left:60px;
+            top:15px;
+        }
+        #header_follow{
+            width:auto;
+            font-size: 15px;
+            color: green;
+            position:absolute;
+            top:15px;
+            right:100px;
+        }
+
+        #main_img{
+            width:100%;
+            position: relative;
+        }
+        #footer{
+            width:100%;
+            position: relative;
+            height: 40px;
+            margin-top:0;
+            
+        }
+        #Pg5_main{
+            width:100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+        #Pg5_header{
+            width:100%;
+            position: absolute;
+            height: 200px;
+            top:0%;
+            left: 0%;
+            background: rgb(1,188,55);
+            text-shadow: 0px 0px rgb(1,188,55);
+        }
+        #Pg5_userstatus{
+            position: absolute;
+            top:30px;
+            width:85%;
+            height: 100px;
+            left: 7.5%;
+            font-size: 20px;
+            left: 30px;
+            color: white;
+            text-shadow: 0px 0px rgb(1,188,55);
+        }
+        #Pg5_userstatus_btn{
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width:30px;
+          
+            
+        }
+        #Pg5_profile{
+            position: absolute;
+            width:100%;
+            top:50px;
+            height: 300px;
+        }
+        #Pg5_profile_username{
+            position: absolute;
+            width:193px;
+            left: 15px;
+            top:175px;
+            left:140px;
+            font-size: 20px;
+            text-align: center;
+            font-weight: 700;
+            text-shadow: 0px 0px white;                    
+        }
+        #Pg5_profile_img{
+            position: absolute;
+            width:120px;
+            height: 120px;
+            top:90px;
+            left:15px;
+            border: 2px solid white;
+            border-radius: 5px
+        }
+        #Pg5_profile_img_container{
+            position: absolute;
+            width:120px;
+            height: 120px;
+            top:90px;
+            left:15px;
+            border: 2px solid white;
+            border-radius: 5px;
+        }
+        #Pg5_profile_img_container_btn{
+            position: absolute;
+            bottom: 0%;
+            height: 30px;
+            width:100%;
+            background: rgba(0,50,255,0.5);
+            text-shadow: 0px 0px rgba(0,50,255,0.5);
+            font-size: 15px;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            
+        }
+        .Pg5_profile_follow{
+            position: absolute;
+            width:auto;
+            height: auto;
+            top: 260px;
+            text-align: center;
+        }
+        #Pg5_profile_follow1{
+            left: 10%;
+        }
+        #Pg5_profile_follow2{
+            left: 43.5%;
+        }
+        #Pg5_profile_follow3{
+            right: 10%;
+        }
+        #Pg5_profile_write{
+            position: absolute;
+            width:100%;
+            height: 40px;
+            text-align: center;
+            font-size: 35px;
+            background: rgba(0,128,255,0.8);
+            text-shadow: 0px 0px rgba(0,128,255,1);
+            top:360px;
+            color: white;
+        }
+        #Pg5_post{
+            width:100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: white;
+        }
+        #Pg5_post_leftbtn{
+            position: absolute;
+            width: 35px;
+            top: 5px;
+            left: 5px;            
+        }
+        #Pg5_post_textarea{
+            position: absolute;
+            left: 5%;
+            width:90%;
+            top:70px;
+            resize: none;
+            outline: none;
+            border-radius: 0%;
+            border: 1px solid rgba(100,100,100,0.4);
+            height: 200px;
+        }

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"/>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <title>QnA</title>
+    <!-- HTTPS required. HTTP will give a 403 forbidden response -->
+    <script>  
+      var url='https://www.yomencity.com';
+      var w_h = window.innerHeight;
+      var w_w = window.innerWidth;
+      // var user_id = "{{user_id}}";   
+    </script>
+    <style>
+        #header{
+          position: fixed;
+          top:0;
+          left:0;
+          width:100%;
+          height:95px;
+        }
+        .header_comp{
+          position: absolute;
+          width:50px;
+          height:50px;
+          background:#fff;
+          border-radius: 50px;
+          line-height: 50px;
+          text-align: center;
+          top:2.5px;
+          box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
+          text-shadow: 0px 0px 0px rgba(255,255,255,0);
+          color:#000
+        }
+        #header_comp1{
+          left:5px
+        }
+        #header_comp2{
+          left:65px
+        }
+        #header_comp3{
+          left:125px
+        }
+        #PW{
+          position: absolute;
+          top:5px;
+          right:10px;
+          width:130px;
+          height: 35px;
+          background:rgb(230,230,230);
+          border: 1px solid rgb(200,200,200);
+        }
+        #resultlegth{
+          position: absolute;
+          top:55px;
+          right:10px;
+          width:80px;
+          height: 35px;
+          border: 1px solid rgb(200,200,200);
+          font-size:16px;
+          line-height: 35px;
+          text-align: right;
+          padding-right: 5px;
+          background:#fff
+        }
+        #search{
+          position: absolute;
+          top:58px;
+          left:10px;
+          width:200px;
+          height: 35px;
+          background:rgb(230,230,230);
+          border: 1px solid rgb(200,200,200);
+        }
+        #search_btn{
+          position:absolute;
+          top:50px;
+          left:220px;
+          width:40px;
+          height:40px;
+          box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
+          line-height: 40px;
+          text-align: center;
+          border-radius: 40px;
+          text-shadow: 0px 0px 0px rgba(255,255,255,0);
+          color:#000;
+          background:#fff
+        }
+        #parent{
+            position: absolute;
+            top:95px;
+            left:0;
+            width:100%;
+            height: 200px;
+            background:#ffffff;
+            overflow: scroll;
+        }
+        #sp1{
+          position:absolute;
+          top:0;
+          left:0;
+          width:100%;
+          height: 95px;
+          background:rgb(240,240,240);
+        }
+    </style>
+</head>
+<body id="body">
+  <div id="header">
+    <div id="sp1"></div>
+    <div class="header_comp" id="header_comp1">대기</div>
+    <div class="header_comp" id="header_comp2">답변</div>
+    <!-- <div class="header_comp" id="header_comp3">취소</div> -->
+    <input id='PW' type="password"/>
+    <!-- <input id='search'/> -->
+    <!-- <div id="search_btn">로드</div> -->
+    <span id='resultlegth'></span>
+  </div>
+  <div id="parent">
+  </div>
+  <script>    
+    $(function(){
+      var w_h = window.innerHeight;
+      var w_w = window.innerWidth; 
+      $('#parent').css({'height':(w_h-95)+'px'});
+      $('#header_comp1').click(()=>{
+        $('.header_comp').css({'background':'#fff','color':'#000'});
+        $('#search_btn').css({'background':'#fff','color':'#000'});
+        $('#header_comp1').css({'background':'#000','color':'#fff'});
+        getready();
+      });
+      $('#header_comp2').click(()=>{
+        $('.header_comp').css({'background':'#fff','color':'#000'});
+        $('#search_btn').css({'background':'#fff','color':'#000'});
+        $('#header_comp2').css({'background':'#000','color':'#fff'});
+        getexchange(1);
+      });
+      // $('#header_comp3').click(()=>{
+      //   $('.header_comp').css({'background':'#fff','color':'#000'});
+      //   $('#search_btn').css({'background':'#fff','color':'#000'});
+      //   $('#header_comp3').css({'background':'#000','color':'#fff'});
+      //   getexchange(2);
+      // });
+      // $('#search_btn').click(()=>{
+      //   $('.header_comp').css({'background':'#fff','color':'#000'});
+      //   $('#search_btn').css({'background':'#000','color':'#fff'});
+      //   getsearch();
+      // });
+      function getready(index){
+        $('#resultlegth').text('');
+        $('.add_ex').remove();
+        var data={
+          index,
+          PW:$('#PW').val()
+        }
+        $.ajax({
+          type: 'POST',
+          data: JSON.stringify(data),
+          contentType: 'application/json',
+          url: url+'/getreadyqna',
+          success: function(output){
+            if(output.status==100){
+              $('.add_ex').remove();
+              var rel=output.post.length;
+              $('#resultlegth').text(rel+' ');
+              for(var i=0;i<rel;i++){
+                add_ex(output.post[i]);
+              }
+            }else if(output.status==200){
+              alert('wrongPW');
+              $('#PW').val('')
+            }else{
+              alert(output.status);
+            }    
+          }
+        });   
+      }
+      var $parent=$('#parent');
+      var add_ex=function(post){    
+        var div=$('<div>'+post._id+'</br>'+post.txt+'</div>');
+        div.addClass('add_ex')
+        div.css({
+          'position':'relative',
+          'width':'100%',
+          'box-sizing':'border-box',
+          'border-bottom':'1px solid rgb(180,180,180)',
+          'padding':'80px 15px 15px 15px',
+        });
+        var input=$('<textarea/>');
+        input.css({'position':'absolute','top':'10px','left':'15px','width':w_w-100+'px','height':'60px'})
+        div.append(input);
+        var btn=$('<div>전송</div>');
+        btn.css({'position':'absolute','top':'10px','right':'10px','width':'45px','height':'45px','background':'#000','line-height':'45px','text-align':'center','color':'#fff','text-shadow':'0px 0px 0px rgba(255,255,255,0)','font-size':'18px'});
+        div.append(btn);
+        btn.click(()=>{
+          $('.checkdiv').remove();  
+          var div2=$('<div></div>');
+          div2.addClass('checkdiv');  
+          div2.css({'position':'absolute','top':'0px','left':'0px','width':(w_w)+'px','height':(w_h)+'px','background':'rgba(0,0,0,0.1)'});
+          var container=$('<div>'+post._id+'</br>'+input.val()+'</br>위 내용으로 전송하시겠습니까?</div>');
+          container.css({'position':'absolute','width':(w_w-50)+'px',height:'230px',background:'#ffffff',left:'25px',top:(w_h-230)/2+'px','border-radius':'40px','padding':'85px 30px 100px 30px','box-sizing':'border-box','font-size':'17px','color':'#000000'});
+          div2.append(container);
+          var span=$('<div>환전 확인</div>');
+          span.css({'position':'absolute','top':'0','left':'0','width':'100%','height':'80px','line-height':'80px','color':'#000000','text-shadow':'0px 0px 0px rgba(255,255,255,0)','text-align':'center','font-size':'25px','font-weight':'500'});
+          container.append(span);   
+          var yes=$('<div>네</div>');
+          yes.css({'position':'absolute','bottom':'20px','width':(w_w-190)/2+'px','height':'50px','right':'30px','color':'#000000','line-height':'50px','text-align':'center','text-shadow':'0px 0px 0px rgba(255,255,255,0)','font-size':'19px','font-weight':'500'});
+          container.append(yes);
+          var no=$('<div>아니요</div>');
+          no.css({'position':'absolute','bottom':'20px','width':(w_w-70)/2+'px','height':'50px','left':'20px','color':'#000000','line-height':'50px','text-align':'center','text-shadow':'0px 0px 0px rgba(255,255,255,0)','font-size':'18px','font-weight':'500'});
+          container.append(no);  
+          var space1=$('<div></div>');
+          space1.css({'position':'absolute','width':w_w+'px','height':(w_h-230)/2+'px','top':'0px','left':'0px'});div2.append(space1);
+          var space2=$('<div></div>');
+          space2.css({'position':'absolute','width':w_w+'px','height':(w_h-230)/2+'px','bottom':'0px','left':'0px'});div2.append(space2);   
+          space1.click(function(){
+            $('.checkdiv').remove();
+          });
+          space2.click(function(){
+            $('.checkdiv').remove();
+          });    
+          $('body').append(div2);
+          yes.click(function(){
+            $('.checkdiv').remove();    
+            var data={
+                _id:post._id,
+                txt:input.val(),
+                PW:$('#PW').val(),
+              }
+              $.ajax({
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                url: url+'/qnareply',
+                success: function(output){
+                  if(output.status==100){
+                    btn.remove();
+                    var btn2=$('<div>완료</div>');
+                    btn2.css({'position':'absolute','top':'10px','right':'10px','width':'45px','height':'45px','background':'green','line-height':'45px','text-align':'center','color':'#fff','text-shadow':'0px 0px 0px rgba(255,255,255,0)','font-size':'18px'});
+                    div.append(btn2);
+                  }else if(output.status==200){
+                    alert('wrongPW');
+                    $('#PW').val('')
+                  }else{
+                    alert(output.status);
+                  }    
+                }
+              });
+          });
+          no.click(function(){
+            $('.checkdiv').remove();    
+          }); 
+        })
+        $parent.append(div);    
+      };     
+      var t_fun=function(ct){   
+        var d = new Date(ct);
+        var h=d.getHours();
+        var m=d.getMinutes();
+        if(m<10){
+          m='0'+m;  
+        }    
+        if(h>=13){
+          h=' 오후 '+(h-12)+':'+m;  
+        }else if(h>0){
+          h=' 오전 '+h+':'+m;  
+        }else{
+          h=' 오후 '+'12'+':'+m;  
+        }    
+        rc = (d.getMonth()+1)+'월'+d.getDate()+'일'+h;
+        return rc;
+      }
+      var t_fun2=function(rc){   
+        if(rc<60000){
+          rc = parseInt(rc/1000)+'초';
+        }else if(rc <3600000 && rc>=60000){
+          rc = parseInt(rc/60000)+'분';
+        }else{
+          rc = parseInt(rc/3600000)+'시간 '+parseInt((rc%3600000)/60000)+'분';
+        }
+        return rc;    
+      }  
+    });      
+  </script>   
+</body>
+</html>

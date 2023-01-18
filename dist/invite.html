@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>스티콘</title>
+    <!-- HTTPS required. HTTP will give a 403 forbidden response -->
+    <script>
+      var zzz="{{status}}"
+      console.log(zzz)
+    </script>
+    <style>
+        #welcomeContainer{
+          flex-direction: column;
+          /* justify-content: center; */
+          width:100%;
+          height:100%;
+          position: absolute;
+          top:0;
+          left:0;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+        }
+        #welcomeIMG{
+          width:48px;
+          height:48px;
+          margin-top:40px;
+        }
+        #parent{
+          flex-direction: column;
+          /* justify-content: center; */
+          width:100%;
+          height:100%;
+          position: absolute;
+          top:0;
+          left:0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        #containerBox{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+        }
+        #profileContainter{
+          width:30%;
+          border-radius: 100%;
+          background-color: rgba(100,100,100,0.1);
+          overflow: hidden;
+        }
+        #profileIMG{
+          width: 100%;
+          height:100%;
+        }
+        #groupName{
+          font-size: 25px;
+          margin-top: 48px;
+        }
+        #welcomeSentence{
+          margin-top: 48px;
+          text-align: center;
+          font-size: 16px;
+        }
+        #bottomContainer{
+          width: 100%;
+          margin-top: 48px;
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+          flex-direction: column;
+        }
+        #list{
+          margin-top: 16px;
+          font-size: 14px;
+          color:rgba(0,0,0,0.8);
+          text-align: center;
+          padding-left:18%;
+          padding-right: 18%;
+        }
+        #welcomeMSG{
+          margin-top:40px;
+          font-size: 18px;
+          color: '#222';
+        }
+    </style>
+    <script>  
+    var URL='https://www.yomencity.com';
+    var w_h = window.innerHeight;
+    var w_w = window.innerWidth;
+    $(function(){
+      // $('#parent').hide();
+      // $('#parent').fadeIn()
+    });     
+    </script>
+</head>
+<body id="body">
+  <div id='welcomeContainer'>
+    <img
+      id='welcomeIMG'
+      src='https://sticonsticker.s3.ap-northeast-2.amazonaws.com/xXZ6SjDYY_180'
+    >
+  </div>
+  <div id="parent">
+    <div id="containerBox">
+      <div id="profileContainter">
+        <img 
+          src={{img}}
+          alt="그룹 이미지" 
+          id='profileIMG'
+        >
+      </div>
+      <div id="groupName">
+        <b>{{id}}</b><br/>
+      </div>
+      <div id="list">{{list}}</div>
+    </div>
+    <span id='welcomeMSG'>스티콘으로 초대합니다.</span>
+    <div id="bottomContainer">
+      <a
+        href="https://play.google.com/store/apps/details?id=com.jc.sticon"
+      >
+        <img
+          src='https://sticonsticker.s3.ap-northeast-2.amazonaws.com/voxLE1-H5_180'
+          height='40'
+          id="playstoreIMG"
+        >
+      </a>
+      <a
+        href="https://apps.apple.com/us/app/sticon/id1542251106"
+      >
+        <img
+          src='https://sticonsticker.s3.ap-northeast-2.amazonaws.com/q11ArJvQg_180'
+          style="margin-top:8px"
+          height='43'
+          id="appstoreIMG"
+        >
+      </a>
+    </div>
+  </div>
+  <script>
+    var w_h = window.innerHeight;
+    var w_w = window.innerWidth;   
+    var url='http://www.sticon.site'
+    $(function(){
+      $('#profileContainter').css({
+        width:w_w*0.35+'px',
+        height:w_w*0.35+'px'
+      });
+      // $('#playstoreIMG').attr('src',`${url}/dist/playstore.png`);
+      // $('#appstoreIMG').attr('src',`${url}/dist/appstore.png`)
+      // $('#welcomeIMG').attr('src',`${url}/dist/welcome.jpg`)
+
+    });   
+  </script>     
+</body>
+</html>

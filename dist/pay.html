@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"/>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+    <title>Document</title>
+    <!-- HTTPS required. HTTP will give a 403 forbidden response -->
+    <style>
+        #parent{
+            position: absolute;
+            top:0;
+            left:0;
+            width:100%;
+            height: 100%;
+            background:#ffffff;
+            overflow: scroll;
+        }
+        .line{
+            position: relative;
+            width:80%;
+            height: 50px;
+            left:10%;
+            text-shadow: 0px 0px 0px rgba(255,255,255,0);
+            text-align: center;
+            color: rgb(62,63,67);
+            font-size:17px;
+            margin-Top:20px;
+            margin-Bottom:30px;
+            font-weight: 500;
+            /* border:0.5px solid rgba(200,200,200,0.3); */
+            line-height: 50px;
+            border-radius: 50px;
+            box-shadow: 0px 4px 6px rgb(200,200,200);
+            box-shadow: 0px 4px 6px rgb(150,150,150);
+            background: #000000;
+            color:#ffffff
+        }
+    </style>
+    <script>  
+    var URL='https://www.yomencity.com';
+    var w_h = window.innerHeight;
+    var w_w = window.innerWidth;
+    var user_id = "{{user_id}}";
+    console.log(user_id)
+    $(function(){
+      $('#parent').hide();
+      $('#parent').fadeIn()
+    });     
+    </script>
+</head>
+<body id="body">
+  <div id="parent">
+    <div id='line10' class='line'>10 다트 (990원)</div>
+    <div id='line20' class='line'>20 다트 (1,980원)</div>
+    <div id='line30' class='line'>30 다트 (2,970원)</div>
+    <div id='line50' class='line'>50 다트 (4,950원)</div>
+    <div id='line100' class='line'>100 다트 (9,900원)</div>
+    <div id='line200' class='line'>200 다트 (19,800원)</div>
+    <div id='line400' class='line'>300 다트 (29,700원)</div>
+    <div id='line300' class='line'>400 다트 (39,600원)</div>
+    <div id='line500' class='line'>500 다트 (49,500원)</div>
+  </div>
+  <script>
+//    var w_h = window.innerHeight;
+//    var w_w = window.innerWidth;      
+    $(function(){
+      var paymethod=function(amount){
+        $('.paymethoddiv').remove();  
+        var amount=amount;  
+        var div=$('<div></div>');
+        div.addClass('paymethoddiv');  
+        div.css({'position':'absolute','top':'0px','left':'0px','width':(w_w)+'px','height':(w_h)+'px','background':'rgba(0,0,0,0.1)'});
+        var container=$('<div>'+amount*99+'원을 어떤 결제수단을 이용해서 결제하시겠습니까?</div>');
+        container.css({'position':'absolute','width':(w_w-50)+'px',height:'230px',background:'#ffffff',left:'25px',top:(w_h-230)/2+'px','border-radius':'40px','padding':'85px 30px 100px 30px','box-sizing':'border-box','font-size':'17px','color':'#000000'});
+        div.append(container);
+        var span=$('<div>결제수단</div>');
+        span.css({'position':'absolute','top':'0','left':'0','width':'100%','height':'80px','line-height':'80px','color':'#000000','text-shadow':'0px 0px 0px rgba(255,255,255,0)','text-align':'center','font-size':'25px','font-weight':'500'});
+        container.append(span);   
+        var card=$('<div>카드</div>');
+        card.css({'position':'absolute','bottom':'20px','width':(w_w-190)/2+'px','height':'50px','right':'30px','color':'#000000','line-height':'50px','text-align':'center','text-shadow':'0px 0px 0px rgba(255,255,255,0)','font-size':'19px','font-weight':'500'});
+        container.append(card);
+        var phone=$('<div>핸드폰 소액 결제</div>');
+        phone.css({'position':'absolute','bottom':'20px','width':(w_w-70)/2+'px','height':'50px','left':'20px','color':'#000000','line-height':'50px','text-align':'center','text-shadow':'0px 0px 0px rgba(255,255,255,0)','font-size':'18px','font-weight':'500'});
+        container.append(phone);  
+        var space1=$('<div></div>');
+        space1.css({'position':'absolute','width':w_w+'px','height':(w_h-230)/2+'px','top':'0px','left':'0px'});div.append(space1);
+        var space2=$('<div></div>');
+        space2.css({'position':'absolute','width':w_w+'px','height':(w_h-230)/2+'px','bottom':'0px','left':'0px'});div.append(space2);   
+        space1.click(function(){
+          $('.paymethoddiv').remove();
+        });
+        space2.click(function(){
+          $('.paymethoddiv').remove();
+        });    
+        $('body').append(div);
+        card.click(function(){
+          $('.paymethoddiv').remove();    
+          requestPay(amount,'card');
+        });
+        phone.click(function(){
+          $('.paymethoddiv').remove();    
+          requestPay(amount,'phone');   
+        });          
+      };    
+      $('#line10').click(function(){
+        paymethod(10);  
+      });
+      $('#line20').click(function(){
+        paymethod(20);  
+      });
+      $('#line30').click(function(){
+        paymethod(30);  
+      });
+      $('#line50').click(function(){
+        paymethod(50);  
+      });
+      $('#line100').click(function(){
+        paymethod(100);  
+      });
+      $('#line200').click(function(){
+        paymethod(200);  
+      });
+      $('#line300').click(function(){
+        paymethod(300);  
+      });
+      $('#line400').click(function(){
+        paymethod(300);  
+      });
+      $('#line500').click(function(){
+        paymethod(500);  
+      });
+      
+      //
+      var _payComplete=(imp_uid)=>{
+        alert('payCOmple')
+        let data={
+          imp_uid:imp_uid
+        };
+        const obj = {
+          body: JSON.stringify(data),
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          method: 'POST'
+        }
+        fetch(`${URL}/payments/complete`, obj)
+        .then((response) => response.json())
+        .then(((responseJson) => {
+          if(responseJson.status===100){
+            alert('결제 성공');
+          }else if(responseJson.status>=800 &&responseJson.status<900){
+            alert(`
+            결제완료에 실패하였습니다. 
+            개발진에서 에러증상(errorcode:${responseJson.status})을 토대로 검사가 실시됩니다. 
+            자세한 문의는 dartDEV@gmail.com 로 해주시기바랍니다.
+            `);
+          }else{
+            alert(`
+              결제완료에 실패하였습니다.
+              dartDEV@gmail.com 로 아래의 에러코드를 보내주시기 바랍니다.
+              errorcode:${responseJson.status}
+            `);
+          }
+        }).bind(this))
+        .catch((error) => {
+          console.error(error);
+        });
+      }
+      //
+      var IMP = window.IMP; // 생략해도 괜찮습니다.
+      IMP.init("imp77888976"); // "imp00000000" 대신 발급받은 "가맹점 식별코드"를 사용합니다.    
+  // IMP.request_pay(param, callback) 호출
+      function requestPay(coin_amount,pay_method) {
+        let data={
+          user_id:user_id,
+          amount:coin_amount*99,
+          method:pay_method
+        };
+        const obj = {
+          body: JSON.stringify(data),
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          method: 'POST'
+        }
+        fetch(`${URL}/makemcts`, obj)
+        .then((response) => response.json())
+        .then((responseJson) => {
+          if(responseJson.status===100){
+              IMP.request_pay({ // param
+                  pg: 'html5_inicis',
+                  name: coin_amount+'다트',
+                  digital:false,
+                  merchant_uid: responseJson.mct,
+                  amount: coin_amount*99,
+                  buyer_name: `/user_id`,
+                  buyer_tel: '010',
+                  app_scheme: 'DART',
+              }, function (rsp) { // callback
+                alert('aa');
+                  if (rsp.success) {
+                    alert('rspsuccess');
+                      _payComplete(rsp.imp_uid);
+                  } else {
+                      console.log('err');
+                    alert(JSON.stringify(rsp));
+                  }
+              });
+          }else if(responseJson.status>=700&&responseJson.status<800){
+            alert(responseJson.alert);
+          }else{
+            alert('makemct failed');
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      }    
+    });   
+  </script>     
+</body>
+</html>

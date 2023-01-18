@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"/>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <title>userearch</title>
+    <!-- HTTPS required. HTTP will give a 403 forbidden response -->
+    <script>  
+      var url='https://www.yomencity.com';
+      var w_h = window.innerHeight;
+      var w_w = window.innerWidth;
+      // var user_id = "{{user_id}}";   
+    </script>
+    <style>
+        #header{
+          position: fixed;
+          top:0;
+          left:0;
+          width:100%;
+          height:95px;
+        }
+        .header_comp{
+          position: absolute;
+          width:50px;
+          height:50px;
+          background:#fff;
+          border-radius: 50px;
+          line-height: 50px;
+          text-align: center;
+          top:2.5px;
+          box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
+          text-shadow: 0px 0px 0px rgba(255,255,255,0);
+          color:#000
+        }
+        #header_comp1{
+          left:5px
+        }
+        #header_comp2{
+          left:65px
+        }
+        #header_comp3{
+          left:125px
+        }
+        #PW{
+          position: absolute;
+          top:5px;
+          right:10px;
+          width:130px;
+          height: 35px;
+          background:rgb(230,230,230);
+          border: 1px solid rgb(200,200,200);
+        }
+        #resultlegth{
+          position: absolute;
+          top:55px;
+          right:10px;
+          width:80px;
+          height: 35px;
+          border: 1px solid rgb(200,200,200);
+          font-size:16px;
+          line-height: 35px;
+          text-align: right;
+          padding-right: 5px;
+          background:#fff
+        }
+        #search{
+          position: absolute;
+          top:58px;
+          left:10px;
+          width:200px;
+          height: 35px;
+          background:rgb(230,230,230);
+          border: 1px solid rgb(200,200,200);
+        }
+        #search_btn{
+          position:absolute;
+          top:50px;
+          left:220px;
+          width:40px;
+          height:40px;
+          box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
+          line-height: 40px;
+          text-align: center;
+          border-radius: 40px;
+          text-shadow: 0px 0px 0px rgba(255,255,255,0);
+          color:#000;
+          background:#fff
+        }
+        #search2{
+          position: absolute;
+          top:58px;
+          left:300px;
+          width:200px;
+          height: 35px;
+          background:rgb(230,230,230);
+          border: 1px solid rgb(200,200,200);
+        }
+        #search_btn2{
+          position:absolute;
+          top:50px;
+          left:520px;
+          width:40px;
+          height:40px;
+          box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
+          line-height: 40px;
+          text-align: center;
+          border-radius: 40px;
+          text-shadow: 0px 0px 0px rgba(255,255,255,0);
+          color:#000;
+          background:#fff
+        }
+        #parent{
+            position: absolute;
+            top:95px;
+            left:0;
+            width:100%;
+            height: 200px;
+            background:#ffffff;
+            overflow: scroll;
+        }
+        #sp1{
+          position:absolute;
+          top:0;
+          left:0;
+          width:100%;
+          height: 95px;
+          background:rgb(240,240,240);
+        }
+    </style>
+</head>
+<body id="body">
+  <div id="header">
+    <div id="sp1"></div>
+    <div class="header_comp" id="header_comp1">전체</div>
+    <!-- <div class="header_comp" id="header_comp2">환.완</div>
+    <div class="header_comp" id="header_comp3">취소</div> -->
+    <input id='PW' type="password"/>
+    <input id='search'/>
+    <div id="search_btn">검색</div>
+    <input id='search2'/>
+    <div id="search_btn2">검색</div>
+    <span id='resultlegth'></span>
+  </div>
+  <div id="parent">
+  </div>
+  <script>    
+    $(function(){
+      var w_h = window.innerHeight;
+      var w_w = window.innerWidth; 
+      $('#parent').css({'height':(w_h-95)+'px'});
+      $('#header_comp1').click(()=>{
+        $('.header_comp').css({'background':'#fff','color':'#000'});
+        $('#search_btn').css({'background':'#fff','color':'#000'});
+        $('#header_comp1').css({'background':'#000','color':'#fff'});
+        getall();
+      });
+      $('#header_comp2').click(()=>{
+        $('.header_comp').css({'background':'#fff','color':'#000'});
+        $('#search_btn').css({'background':'#fff','color':'#000'});
+        $('#header_comp2').css({'background':'#000','color':'#fff'});
+        getexchange(1);
+      });
+      $('#header_comp3').click(()=>{
+        $('.header_comp').css({'background':'#fff','color':'#000'});
+        $('#search_btn').css({'background':'#fff','color':'#000'});
+        $('#header_comp3').css({'background':'#000','color':'#fff'});
+        getexchange(2);
+      });
+      $('#search_btn').click(()=>{
+        $('.header_comp').css({'background':'#fff','color':'#000'});
+        $('#search_btn').css({'background':'#000','color':'#fff'});
+        $('#search_btn2').css({'background':'#fff','color':'#000'});
+        searchone();
+      });
+      $('#search_btn2').click(()=>{
+        $('.header_comp').css({'background':'#fff','color':'#000'});
+        $('#search_btn2').css({'background':'#000','color':'#fff'});
+        $('#search_btn').css({'background':'#fff','color':'#000'});
+        searchone2();
+      });
+      function getall(){
+        var data={
+          PW:$('#PW').val()
+        }
+        $.ajax({
+          type: 'POST',
+          data: JSON.stringify(data),
+          contentType: 'application/json',
+          url: url+'/usersearchall',
+          success: function(output){
+            if(output.status==100){
+              $('.add_ex').remove();
+              console.log(output);
+              var rel=output.post.length;
+              $('#resultlegth').text(rel+' ');
+              for(var i=0;i<rel;i++){
+                add_ex(output.post[i]);
+              }
+            }else if(output.status==200){
+              alert('wrongPW');
+              $('#PW').val('')
+            }else{
+              alert(output.status);
+            }    
+          }
+        }); 
+      }
+      function getexchange(index){
+        $('#resultlegth').text('');
+        $('.add_ex').remove();
+        var data={
+          index,
+          PW:$('#PW').val()
+        }
+        console.log('getexchange');
+        console.log(data);
+        $.ajax({
+          type: 'POST',
+          data: JSON.stringify(data),
+          contentType: 'application/json',
+          url: url+'/getexchange',
+          success: function(output){
+            if(output.status==100){
+              $('.add_ex').remove();
+              console.log(output);
+              var rel=output.post.length;
+              $('#resultlegth').text(rel+' ');
+              for(var i=0;i<rel;i++){
+                add_ex(output.post[i]);
+              }
+            }else if(output.status==200){
+              alert('wrongPW');
+              $('#PW').val('')
+            }else{
+              alert(output.status);
+            }    
+          }
+        });   
+      }
+      function searchone(){
+        $('#resultlegth').text('');
+        $('.add_ex').remove();
+        var data={
+          id:$('#search').val(),
+          PW:$('#PW').val()
+        }
+        console.log(data);
+        $.ajax({
+          type: 'POST',
+          data: JSON.stringify(data),
+          contentType: 'application/json',
+          url: url+'/usersearchone',
+          success: function(output){
+            if(output.status==100){
+              $('.add_ex').remove();
+              console.log(output);
+              var rel=output.post.length;
+              $('#resultlegth').text(rel+' ');
+              for(var i=0;i<rel;i++){
+                add_ex2(output.post[i]);
+              }
+            }else if(output.status==200){
+              alert('wrongPW');
+              $('#PW').val('')
+            }else if(output.status==502){
+              alert('wrong id');
+            }else{
+              alert(output.status);
+            }    
+          }
+        });   
+      }
+      function searchone2(){
+        $('#resultlegth').text('');
+        $('.add_ex').remove();
+        var data={
+          _id:$('#search2').val(),
+          PW:$('#PW').val()
+        }
+        console.log(data);
+        $.ajax({
+          type: 'POST',
+          data: JSON.stringify(data),
+          contentType: 'application/json',
+          url: url+'/usersearchone2',
+          success: function(output){
+            if(output.status==100){
+              $('.add_ex').remove();
+              console.log(output);
+              var rel=output.post.length;
+              $('#resultlegth').text(rel+' ');
+              for(var i=0;i<rel;i++){
+                add_ex2(output.post[i]);
+              }
+            }else if(output.status==200){
+              alert('wrongPW');
+              $('#PW').val('')
+            }else if(output.status==502){
+              alert('wrong id');
+            }else{
+              alert(output.status);
+            }    
+          }
+        });   
+      }
+      var $parent=$('#parent');
+      var add_ex=function(post){    
+        var phem;
+        if(post.ph==''){
+          phem=post.em;
+        }else{
+          phem=post.ph;
+        }
+        var div=$('<div>user_id:  '+post.user_id+'  /   아이디 : '+post.id+'</br>em/ph:'+phem+'</div>');
+        div.addClass('add_ex')
+        div.css({'position':'relative','width':'100%','padding-bottom':'10px','box-sizing':'border-box','border-bottom':'1px solid rgb(180,180,180)'});
+        $parent.append(div);    
+      }; 
+      var add_ex2=function(post){
+        console.log('add_Ex2')    
+        var phem;
+        if(post.ph==''){
+          phem=post.em;
+        }else{
+          phem=post.ph;
+        }
+
+        var coinarr='';
+        for(var i=0;i<post.coinarr.length;i++){
+          coinarr+=post.coinarr[i].type+' / coin :'+post.coinarr[i].coin+' / 일자'+t_fun(post.coinarr[i].ct)+'</br>'
+        }
+        var div=$('<div>user_id:  '+post.user_id+'  /   아이디 : '+post.id+'</br>em/ph:'+phem+'<br>보유다트:'+post.coin+'</br>'+coinarr+'</div>');
+        div.addClass('add_ex')
+        div.css({'position':'relative','width':'100%','padding-bottom':'10px','box-sizing':'border-box','border-bottom':'1px solid rgb(180,180,180)','line-height':'25px'});
+        $parent.append(div);    
+      };     
+      var t_fun=function(ct){   
+        var d = new Date(ct);
+        var h=d.getHours();
+        var m=d.getMinutes();
+        if(m<10){
+          m='0'+m;  
+        }    
+        if(h>=13){
+          h=' 오후 '+(h-12)+':'+m;  
+        }else if(h>0){
+          h=' 오전 '+h+':'+m;  
+        }else{
+          h=' 오후 '+'12'+':'+m;  
+        }    
+        rc = (d.getMonth()+1)+'월'+d.getDate()+'일'+h;
+        return rc;
+      }
+      var t_fun2=function(rc){   
+        if(rc<60000){
+          rc = parseInt(rc/1000)+'초';
+        }else if(rc <3600000 && rc>=60000){
+          rc = parseInt(rc/60000)+'분';
+        }else{
+          rc = parseInt(rc/3600000)+'시간 '+parseInt((rc%3600000)/60000)+'분';
+        }
+        return rc;    
+      }  
+    });      
+  </script>   
+</body>
+</html>

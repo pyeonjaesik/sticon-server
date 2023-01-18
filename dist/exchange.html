@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"/>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <title>Exchange</title>
+    <!-- HTTPS required. HTTP will give a 403 forbidden response -->
+    <script>  
+      var url='https://www.yomencity.com';
+      var w_h = window.innerHeight;
+      var w_w = window.innerWidth;
+      // var user_id = "{{user_id}}";   
+    </script>
+    <style>
+        #header{
+          position: fixed;
+          top:0;
+          left:0;
+          width:100%;
+          height:95px;
+        }
+        .header_comp{
+          position: absolute;
+          width:50px;
+          height:50px;
+          background:#fff;
+          border-radius: 50px;
+          line-height: 50px;
+          text-align: center;
+          top:2.5px;
+          box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
+          text-shadow: 0px 0px 0px rgba(255,255,255,0);
+          color:#000
+        }
+        #header_comp1{
+          left:5px
+        }
+        #header_comp2{
+          left:65px
+        }
+        #header_comp3{
+          left:125px
+        }
+        #PW{
+          position: absolute;
+          top:5px;
+          right:10px;
+          width:130px;
+          height: 35px;
+          background:rgb(230,230,230);
+          border: 1px solid rgb(200,200,200);
+        }
+        #resultlegth{
+          position: absolute;
+          top:55px;
+          right:10px;
+          width:80px;
+          height: 35px;
+          border: 1px solid rgb(200,200,200);
+          font-size:16px;
+          line-height: 35px;
+          text-align: right;
+          padding-right: 5px;
+          background:#fff
+        }
+        #search{
+          position: absolute;
+          top:58px;
+          left:10px;
+          width:200px;
+          height: 35px;
+          background:rgb(230,230,230);
+          border: 1px solid rgb(200,200,200);
+        }
+        #search_btn{
+          position:absolute;
+          top:50px;
+          left:220px;
+          width:40px;
+          height:40px;
+          box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
+          line-height: 40px;
+          text-align: center;
+          border-radius: 40px;
+          text-shadow: 0px 0px 0px rgba(255,255,255,0);
+          color:#000;
+          background:#fff
+        }
+        #parent{
+            position: absolute;
+            top:95px;
+            left:0;
+            width:100%;
+            height: 200px;
+            background:#ffffff;
+            overflow: scroll;
+        }
+        #sp1{
+          position:absolute;
+          top:0;
+          left:0;
+          width:100%;
+          height: 95px;
+          background:rgb(240,240,240);
+        }
+    </style>
+</head>
+<body id="body">
+  <div id="header">
+    <div id="sp1"></div>
+    <div class="header_comp" id="header_comp1">대기</div>
+    <div class="header_comp" id="header_comp2">환.완</div>
+    <div class="header_comp" id="header_comp3">취소</div>
+    <input id='PW' type="password"/>
+    <input id='search'/>
+    <div id="search_btn">검색</div>
+    <span id='resultlegth'></span>
+  </div>
+  <div id="parent">
+  </div>
+  <script>    
+    $(function(){
+      var w_h = window.innerHeight;
+      var w_w = window.innerWidth; 
+      $('#parent').css({'height':(w_h-95)+'px'});
+      $('#header_comp1').click(()=>{
+        $('.header_comp').css({'background':'#fff','color':'#000'});
+        $('#search_btn').css({'background':'#fff','color':'#000'});
+        $('#header_comp1').css({'background':'#000','color':'#fff'});
+        getexchange(0);
+      });
+      $('#header_comp2').click(()=>{
+        $('.header_comp').css({'background':'#fff','color':'#000'});
+        $('#search_btn').css({'background':'#fff','color':'#000'});
+        $('#header_comp2').css({'background':'#000','color':'#fff'});
+        getexchange(1);
+      });
+      $('#header_comp3').click(()=>{
+        $('.header_comp').css({'background':'#fff','color':'#000'});
+        $('#search_btn').css({'background':'#fff','color':'#000'});
+        $('#header_comp3').css({'background':'#000','color':'#fff'});
+        getexchange(2);
+      });
+      $('#search_btn').click(()=>{
+        $('.header_comp').css({'background':'#fff','color':'#000'});
+        $('#search_btn').css({'background':'#000','color':'#fff'});
+        getsearch();
+      });
+      function getexchange(index){
+        $('#resultlegth').text('');
+        $('.add_ex').remove();
+        var data={
+          index,
+          PW:$('#PW').val()
+        }
+        console.log('getexchange');
+        console.log(data);
+        $.ajax({
+          type: 'POST',
+          data: JSON.stringify(data),
+          contentType: 'application/json',
+          url: url+'/getexchange',
+          success: function(output){
+            if(output.status==100){
+              $('.add_ex').remove();
+              console.log(output);
+              var rel=output.post.length;
+              $('#resultlegth').text(rel+' ');
+              for(var i=0;i<rel;i++){
+                add_ex(output.post[i]);
+              }
+            }else if(output.status==200){
+              alert('wrongPW');
+              $('#PW').val('')
+            }else{
+              alert(output.status);
+            }    
+          }
+        });   
+      }
+      function getsearch(){
+        $('#resultlegth').text('');
+        $('.add_ex').remove();
+        var data={
+          id:$('#search').val(),
+          PW:$('#PW').val()
+        }
+        console.log(data);
+        $.ajax({
+          type: 'POST',
+          data: JSON.stringify(data),
+          contentType: 'application/json',
+          url: url+'/searchexchange',
+          success: function(output){
+            if(output.status==100){
+              $('.add_ex').remove();
+              console.log(output);
+              var rel=output.post.length;
+              $('#resultlegth').text(rel+' ');
+              for(var i=0;i<rel;i++){
+                add_ex(output.post[i]);
+              }
+            }else if(output.status==200){
+              alert('wrongPW');
+              $('#PW').val('')
+            }else if(output.status==502){
+              alert('wrong id');
+            }else{
+              alert(output.status);
+            }    
+          }
+        });   
+      }
+      var $parent=$('#parent');
+      var add_ex=function(post){    
+        var div=$('<div></div>');
+        div.addClass('add_ex')
+        div.css({'position':'relative','width':'100%','height':'170px','box-sizing':'border-box','border-bottom':'1px solid rgb(180,180,180)'});
+        if(post.index===0){
+          var ct=$('<span>'+t_fun(post.ct)+'</span>');
+        }else if(post.index===1){
+          var ct=$('<span>'+t_fun(post.ct)+' => '+t_fun(post.pct)+' ('+t_fun2(post.pct-post.ct)+')</span>');
+        }else{
+          var ct=$('<span>'+t_fun(post.ct)+'</span>');
+        }
+        ct.css({'position':'absolute','top':'10px','left':'10px','font-size':'17','color':'#000','height':'25px','line-height':'25px','text-shadow':'0px 0px 0px rgba(255,255,255,0)'});
+        div.append(ct);
+        var info=$('<span>은행:  '+post.bank+'  /   예금주 : '+post.name+'  /</span>');
+        info.css({'position':'absolute','top':'40px','left':'10px','font-size':'16px','height':'20px'});
+        div.append(info);
+        var info2=$('<span>'+post.number+'</span>');
+        info2.css({'position':'absolute','top':'65px','left':'10px','font-size':'16px','height':'20px'});
+        div.append(info2);
+        var info3=$('<span>/'+post.coin+'다트 ( '+(parseInt(post.coin)*60).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+' 원 )</span>');
+        info3.css({'position':'absolute','top':'85px','left':'10px','font-size':'18px','height':'25px'});
+        div.append(info3);
+        var info4=$('<span>/user_id:'+post.user_id+'</span>');
+        info4.css({'position':'absolute','top':'110px','left':'10px','font-size':'15px','height':'20px'});
+        div.append(info4);
+        var info5=$('<span>/post_id:'+post._id+'</span>');
+        info5.css({'position':'absolute','top':'130px','left':'10px','font-size':'15px','height':'20px'});
+        div.append(info5);
+        if(post.index==0){
+          var btn=$('<div>대기</div>');
+          btn.css({'position':'absolute','top':'40px','right':'30px','width':'60px','height':'60px','background':'#ea4335','line-height':'60px','text-align':'center','color':'#fff','text-shadow':'0px 0px 0px rgba(255,255,255,0)','font-size':'18px'});
+          div.append(btn);
+          btn.click(()=>{
+            $('.checkdiv').remove();  
+            var div2=$('<div></div>');
+            div2.addClass('checkdiv');  
+            div2.css({'position':'absolute','top':'0px','left':'0px','width':(w_w)+'px','height':(w_h)+'px','background':'rgba(0,0,0,0.1)'});
+            var container=$('<div>('+t_fun(post.ct)+')'+post.user_id+' 에게 '+post.coin+' 다트 환전을 완료하셨습니까?</div>');
+            container.text(`
+            ${t_fun(post.ct)}
+            user_id:${post.user_id}
+            dart:${post.coin}
+            위 내용으로 환전완료 하셨습니까?
+            `)
+            container.css({'position':'absolute','width':(w_w-50)+'px',height:'230px',background:'#ffffff',left:'25px',top:(w_h-230)/2+'px','border-radius':'40px','padding':'85px 30px 100px 30px','box-sizing':'border-box','font-size':'17px','color':'#000000'});
+            div2.append(container);
+            var span=$('<div>환전 확인</div>');
+            span.css({'position':'absolute','top':'0','left':'0','width':'100%','height':'80px','line-height':'80px','color':'#000000','text-shadow':'0px 0px 0px rgba(255,255,255,0)','text-align':'center','font-size':'25px','font-weight':'500'});
+            container.append(span);   
+            var yes=$('<div>네</div>');
+            yes.css({'position':'absolute','bottom':'20px','width':(w_w-190)/2+'px','height':'50px','right':'30px','color':'#000000','line-height':'50px','text-align':'center','text-shadow':'0px 0px 0px rgba(255,255,255,0)','font-size':'19px','font-weight':'500'});
+            container.append(yes);
+            var no=$('<div>아니요</div>');
+            no.css({'position':'absolute','bottom':'20px','width':(w_w-70)/2+'px','height':'50px','left':'20px','color':'#000000','line-height':'50px','text-align':'center','text-shadow':'0px 0px 0px rgba(255,255,255,0)','font-size':'18px','font-weight':'500'});
+            container.append(no);  
+            var space1=$('<div></div>');
+            space1.css({'position':'absolute','width':w_w+'px','height':(w_h-230)/2+'px','top':'0px','left':'0px'});div2.append(space1);
+            var space2=$('<div></div>');
+            space2.css({'position':'absolute','width':w_w+'px','height':(w_h-230)/2+'px','bottom':'0px','left':'0px'});div2.append(space2);   
+            space1.click(function(){
+              $('.checkdiv').remove();
+            });
+            space2.click(function(){
+              $('.checkdiv').remove();
+            });    
+            $('body').append(div2);
+            yes.click(function(){
+              $('.checkdiv').remove();    
+              var data={
+                  user_id:post.user_id,
+                  post_id:post._id,
+                  coin:post.coin,
+                  PW:$('#PW').val(),
+                  index:0
+                }
+                $.ajax({
+                  type: 'POST',
+                  data: JSON.stringify(data),
+                  contentType: 'application/json',
+                  url: url+'/exchangeindex',
+                  success: function(output){
+                    if(output.status==100){
+                      btn.remove();
+                      var btn2=$('<div>지급완료</div>');
+                      btn2.css({'position':'absolute','top':'40px','right':'30px','width':'60px','height':'60px','background':'#4285f4','line-height':'60px','text-align':'center','color':'#fff','text-shadow':'0px 0px 0px rgba(255,255,255,0)','font-size':'15px'});
+                      div.append(btn2);
+                    }else if(output.status==200){
+                      alert('wrongPW');
+                      $('#PW').val('')
+                    }else{
+                      alert(output.status);
+                    }    
+                  }
+                });
+            });
+            no.click(function(){
+              $('.checkdiv').remove();    
+            }); 
+          })
+        }else if(post.index==1){
+          var btn=$('<div>지급완료</div>');
+          btn.css({'position':'absolute','top':'40px','right':'30px','width':'60px','height':'60px','background':'#34a853','line-height':'60px','text-align':'center','color':'#fff','text-shadow':'0px 0px 0px rgba(255,255,255,0)','font-size':'15px'});
+          div.append(btn);
+        }else if(post.index==2){
+          var btn=$('<div>취소</div>');
+          btn.css({'position':'absolute','top':'40px','right':'30px','width':'60px','height':'60px','background':'#000','line-height':'60px','text-align':'center','color':'#fff','text-shadow':'0px 0px 0px rgba(255,255,255,0)','font-size':'15px'});
+          div.append(btn);
+        }
+        $parent.append(div);    
+      };     
+      var t_fun=function(ct){   
+        var d = new Date(ct);
+        var h=d.getHours();
+        var m=d.getMinutes();
+        if(m<10){
+          m='0'+m;  
+        }    
+        if(h>=13){
+          h=' 오후 '+(h-12)+':'+m;  
+        }else if(h>0){
+          h=' 오전 '+h+':'+m;  
+        }else{
+          h=' 오후 '+'12'+':'+m;  
+        }    
+        rc = (d.getMonth()+1)+'월'+d.getDate()+'일'+h;
+        return rc;
+      }
+      var t_fun2=function(rc){   
+        if(rc<60000){
+          rc = parseInt(rc/1000)+'초';
+        }else if(rc <3600000 && rc>=60000){
+          rc = parseInt(rc/60000)+'분';
+        }else{
+          rc = parseInt(rc/3600000)+'시간 '+parseInt((rc%3600000)/60000)+'분';
+        }
+        return rc;    
+      }  
+    });      
+  </script>   
+</body>
+</html>

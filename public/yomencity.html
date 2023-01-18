@@ -1,0 +1,132 @@
+<!--무조건 마지막에 클릭과 터치 신경쓸 것!-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"/>
+    <script src="http://code.jquery.com/jquery.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <link rel="stylesheet" href="./css/ui.css">
+    <script src="js/ui.js"></script>
+    <script src="js/addpost.js"></script>
+    
+    <title>Yomencity</title>
+
+</head>
+<body>
+    <div id="parent">
+        <div id="middle">
+            <div class="Pg" id="Pg1">
+
+            </div>
+            <div class="Pg" id="Pg2"></div>
+            <div class="Pg" id="Pg3">
+                <div id="postarea3"></div>
+            </div>
+            <div class="Pg" id="Pg4"></div>
+            <div class="Pg" id="Pg5">
+                <div id="Pg5_main">
+                    <div id="Pg5_header">
+                        <div id='Pg5_userstatus'>난 오늘도 눈물을 흘린ㄷr 이런 내가 참 좋ㄷr...
+                        </div>
+                        <img src="img/profile_modify.png" alt="" id="Pg5_userstatus_btn">
+    <!--                    <div id="Pg5_userstatus_btn">상태글 수정</div>-->
+                        <div id="Pg5_profile">
+                            <img src="img/profile.png" id="Pg5_profile_img">
+                            <div id="Pg5_profile_img_container">
+                                <div id="Pg5_profile_img_container_btn">프로필 수정</div>
+                            </div>
+                            <span id="Pg5_profile_username"></span>
+                            <div class="Pg5_profile_follow" id="Pg5_profile_follow1"><b>100</b><br>게시물</div>
+                            <div class="Pg5_profile_follow" id="Pg5_profile_follow2"><b>100</b><br>팔로워</div>
+                            <div class="Pg5_profile_follow" id="Pg5_profile_follow3"><b>100</b><br>팔로잉</div>
+                        </div>
+                    </div>
+                    <div id="Pg5_profile_write">게시물 등록</div>
+                <div id="Pg5_post">
+                    <img src="img/left_arrow.png" id="Pg5_post_leftbtn">
+                    <textarea name="Pg5_post_textarea" id="Pg5_post_textarea" cols="" rows="10" placeholder="오늘의 심경을 적어주세요." maxlength="210"></textarea>
+                </div>
+                
+            </div>
+        </div>
+        <div id="foot">
+            <img src="img/1.png" class="footimg" id="footimg1" >
+            <img src="img/2.png" class="footimg" id="footimg2" >
+            <img src="img/3.png" class="footimg" id="footimg3" >
+            <img src="img/4.png" class="footimg" id="footimg4" >
+            <img src="img/5.png" class="footimg" id="footimg5" >
+            <div class="footdiv" id="footdiv1" ></div>
+            <div class="footdiv" id="footdiv2" ></div>
+            <div class="footdiv" id="footdiv3" ></div>
+            <div class="footdiv" id="footdiv4" ></div>
+            <div class="footdiv" id="footdiv5" ></div>
+        </div>
+    </div>
+    <div id="loginPg">
+        <div style="height:20%"></div>
+        <img src="img/logo.png" id="logo">
+        <div id="loginPg_login">
+          <div id="pp"></div>
+          
+          <div id="loginPg_loginbtn">
+             Yomencity 계정 로그인하기
+          </div>
+
+          <div id="loginPg_signupbtn">새 Yomencity 계정 만들기</div>
+        </div>
+        
+    </div>
+    <div id="loginPg2">
+          <div id="loginPg2_space"></div>
+          <img src="img/logo_green.png" id="loginPg2_logo">
+          <img src="img/left_arrow.png" id="loginPg2_leftbtn">
+          <input type="text" id="loginPg_id" name="loginPg_id" placeholder="아이디">
+          <input type="password" id="loginPg_password" name="loginPg_password" placeholder="패스워드">
+          <img src="img/okbtn.png" id="loginPg2_okbtn">
+          
+        
+    </div>
+    <div id="signupPg">
+       <img src="img/left_arrow.png" id="signupPg_leftarrow" >
+    </div>
+    <script>
+        $(function(){
+            console.log('ok btn 클릭됨');
+            $('#loginPg2_okbtn').touchend(function(e){
+                e.preventDefault();
+                var data = {};
+                data.id = $('#loginPg_id').val();
+                data.password =$('#loginPg_password').val();
+                
+                $.ajax({
+                    type: 'POST',
+                    data: JSON.stringify(data),
+                    contentType: 'application/json',
+                    url: 'http://localhost:3000/login',
+                    
+                    success: function(data){
+                        if(data.status == 1){
+                            window.localStorage['_id'] = data._id;
+                            window.localStorage['name'] = data.name;
+                            window.localStorage['id'] = data.id;
+                            $("#Pg5_userid").text(data.id);
+                            $("#Pg5_profile_username").text(data.name);
+                            $("#loginPg").hide();
+                            $("#loginPg2").hide();
+                            changePg1();                        
+                        }else if(data.status == 2){
+                            alert('사용자 정보가 맞지 않습니다.');
+                        }else{
+                            alert('서버오류발생! 인터넷이 켜져있나요?')
+                        }
+
+                    }
+                });
+            });
+        });
+    </script>
+    </div>
+</body>
+</html>

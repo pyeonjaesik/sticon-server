@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"> -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+    <!-- <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"/> -->
+    <!-- <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script> -->
+    <title>다트환전</title>
+    <!-- HTTPS required. HTTP will give a 403 forbidden response -->
+    <script>  
+      var url='https://www.yomencity.com';
+      var w_h = window.innerHeight;
+      var w_w = window.innerWidth;
+      // var user_id = "{{user_id}}";   
+    </script>
+    <style>
+        div{
+          font-family: Arial, Helvetica, sans-serif;
+        }
+        #parent{
+            position: absolute;
+            top:0;
+            left:0;
+            width:100%;
+            height: 100%;
+            background:'#fff';
+            overflow: scroll;
+        }
+        .Pg{
+          position: absolute;
+          top:0;
+          left: 0;
+          width:100%;
+          height: 100%;
+          background:'#fff';
+        }
+        #header{
+          position:absolute;
+          top:0;
+          left: 0;
+          width:100%;
+          height: 55%;
+        }
+        #Pg1_header{
+          margin-top: 23%;
+          text-align: center;
+          font-size: 25px;
+          color:#000;
+          font-weight: 500;
+        }
+        #Pg1_header_s{
+          margin-top: 3%;
+          text-align: center;
+          font-size: 16px;
+          color:#999;
+          font-weight: 400;
+        }
+        #Pg1_blank{
+          position:absolute;
+          width:100%;
+          height: 60px;
+          background-color:#fff;
+          margin-top: 15%;
+        }
+        .blank{
+          position:absolute;
+          width:10%;
+          height: 28px;
+          border-bottom: 3px solid #888;
+          
+        }
+        #blank1{
+          top:0;
+          left:5%;
+        }
+        #blank2{
+          top:0;
+          left:21%;
+        }
+        #blank3{
+          top:0;
+          left:37%;
+        }
+        #blank4{
+          top:0;
+          left:53%;
+        }
+        #blank5{
+          top:0;
+          left:69%;
+        }
+        #blank6{
+          top:0;
+          left:85%;
+        }
+        .circle{
+          width:15px;
+          height: 15px;
+          background-color: #000;
+          top:10px;
+          left: 0;
+          border-radius: 20px;
+          margin: 0 auto;
+          
+        }
+        #dial{
+          position:absolute;
+          width:100%;
+          height:45%;
+          background-color: #fff;
+          bottom:0px;
+          left:0px;
+        }
+        .number{
+          position:absolute;
+          width:33.3%;
+          height: 25%;
+          background-color: #fff;
+        }
+        #number1{
+          top:0;
+          left:0;
+        }
+        #number2{
+          top:0;
+          left:33.3%;
+        }
+        #number3{
+          top:0;
+          left:66.6%;
+        }
+        #number4{
+          top:25%;
+          left:0;
+        }
+        #number5{
+          top:25%;
+          left:33.3%;
+        }
+        #number6{
+          top:25%;
+          left:66.6%;
+        }
+        #number7{
+          top:50%;
+          left:0;
+        }
+        #number8{
+          top:50%;
+          left:33.3%;
+        }
+        #number9{
+          top:50%;
+          left:66.6%;
+        }
+        #number0{
+          top:75%;
+          left:33.3%;
+        }
+        #numberx{
+          top:75%;
+          left:66.6%;
+          width:33.3%;
+          height: 25%;
+        }
+        #Pg2_left{
+          width:70px;
+          height:50px;
+          font-size: 15px;
+          color:#222;
+          line-height: 50px;
+          text-align: center;
+        }
+        #Pg2_subject{
+          margin-top: 70px;
+          margin-left: 26px;
+          font-size: 17px;
+          font-weight: 600;
+        }
+        #Pg3_subject{
+          margin-top: 20px;
+          margin-left: 26px;
+          font-size: 17px;
+          font-weight: 600;
+        }
+        .Pg2_input{
+          position: absolute;
+          margin-top:20px;
+          width:40%;
+          height: 50px;
+          background-color:rgba(150,150,150,0.1);
+          border:1px solid rgba(100,100,100,0.2);
+          border-radius: 6px;
+          font-size: 17px;
+          padding-left: 10px;
+          box-sizing: border-box;
+          box-shadow: 0px 0px 0px rgba(255,255,255,0);
+          outline: none;
+        }
+        #Pg2_input3{
+          position: absolute;
+          margin-top:85px;
+          height: 50px;
+          background-color:rgba(150,150,150,0.1);
+          border:1px solid rgba(100,100,100,0.2);
+          border-radius: 6px;
+          font-size: 17px;
+          padding-left: 10px;
+          box-sizing: border-box;
+          box-shadow: 0px 0px 0px rgba(255,255,255,0);
+          outline: none;
+        }
+        #Pg2_next{
+          position: absolute;
+          width:100px;
+          height:50px;
+          line-height: 50px;
+          background-color: rgba(100,100,100,0.5);
+          bottom:25px;
+          text-align: center;
+          color:#fff;
+          font-size: 17px;
+          border-radius: 3px;
+        }
+        #Pg3_input{
+          position: absolute;
+          margin-top:85px;
+          height: 60px;
+          background-color:rgba(150,150,150,0.1);
+          border:1px solid rgba(100,100,100,0.2);
+          border-radius: 6px;
+          font-size: 20px;
+          padding-left: 20px;
+          box-sizing: border-box;
+          box-shadow: 0px 0px 0px rgba(255,255,255,0);
+          outline: none;
+        }
+        #Pg3_next{
+          position: absolute;
+          width:100px;
+          height:50px;
+          line-height: 50px;
+          background-color: rgba(100,100,100,0.5);
+          bottom:25px;
+          text-align: center;
+          color:#fff;
+          font-size: 17px;
+          border-radius: 3px;
+        }
+        #Pg3_txt{
+          margin-top: 100px;
+          font-size: 15px;
+          margin-left: 30px;
+          color:#111;
+        }
+        #Pg4{
+          position: absolute;
+          top:0;
+          left: 0;
+          width:100%;
+          height: 100%;
+          background:'#fff';
+          font-size: 30px;
+          color:#000;
+          text-align: center;
+          padding-top:70%;
+          line-height: 45px;
+        }
+        #Pg4_subject{
+          position:absolute;
+          text-align: center;
+          font-size: 40px;
+          color:#000;
+          top:20px;
+          width:100%;
+          font-weight: 600;
+        }
+        /* .number_txt{
+          
+          margin-top:20%;
+          height:200%;
+          background-color:red
+        } */
+
+    </style>
+</head>
+<body id="body">
+  <div id="parent">
+    <div id="Pg1" class='Pg'>
+      <div id='header'>
+        <div id="Pg1_header">암호</div>
+        <div id="Pg1_header_s">비밀번호를 입력해주세요.</div>
+        <div id="Pg1_blank">
+          <div id="blank1" class="blank">
+            <div id="circle1" class="circle"></div>
+          </div>
+          <div id="blank2" class="blank">
+              <div id="circle2" class="circle"></div>
+          </div>
+          <div id="blank3" class="blank">
+              <div id="circle3" class="circle"></div>
+          </div>
+          <div id="blank4" class="blank">
+              <div id="circle4" class="circle"></div>
+          </div>
+          <div id="blank5" class="blank">
+              <div id="circle5" class="circle"></div>
+          </div>
+          <div id="blank6" class="blank">
+              <div id="circle6" class="circle"></div>
+          </div>
+        </div>
+            
+      </div>
+      <div id='dial'>
+        <div id='number1' class='number'>
+          1
+        </div>
+        <div id='number2' class='number'>
+          2
+        </div>
+        <div id='number3' class='number'>
+          3
+        </div>
+        <div id='number4' class='number'>
+          4
+        </div>
+        <div id='number5' class='number'>
+          5
+        </div>
+        <div id='number6' class='number'>
+          6
+        </div>
+        <div id='number7' class='number'>
+          7
+        </div>
+        <div id='number8' class='number'>
+          8
+        </div>
+        <div id='number9' class='number'>
+          9
+        </div>
+        <div id='number0' class='number'>
+            0
+        </div>
+        <div id='numberx'  class='number'>삭제</div>
+      </div>
+    </div>
+  </div>
+  <div id='Pg2' class="Pg">
+    <div id='Pg2_subject'>현금이 입금될 계좌정보를 입력해 주세요.</div>
+    <input id='Pg2_input1' class='Pg2_input' placeholder="은행명" oninput="onInput()"/>
+    <input id='Pg2_input2' class='Pg2_input' placeholder="예금주" oninput="onInput()"/>
+    <input id='Pg2_input3' placeholder="계좌번호( - 없이 입력해주세요.)" oninput="onInput()"/>
+    <div id='Pg2_next'>다음</div>
+  </div>
+  <div id='Pg3' class="Pg">
+    <div id='Pg2_left'>뒤로</div>
+    <div id='Pg3_subject'>현금화할 다트의 갯수를 입력해주세요.</div>
+    <input id='Pg3_input'  placeholder="갯수입력" type='number' oninput="onInput2()"/>
+    <div id='Pg3_txt'>다트 갯수를 입력해주세요.</div>
+    <div id='Pg3_next'>완료</div>
+  </div>
+  <div id='Pg4'>
+    <div id='Pg4_subject'>DART</div>
+    환전 성공하였습니다.</br>
+    앱으로 돌아가신 후</br>
+    새로고침 해주세요.
+  </div>
+  <script> 
+    var onInput;   
+    var onInput2;
+    $(function(){
+      var passCode=''
+      var w_h = window.innerHeight;
+      var w_w = window.innerWidth;
+      var coin=0;
+      var userid = "{{userid}}";
+      $('#Pg1').show();
+      $('#Pg2').hide();
+      $('#Pg3').hide();
+      $('#Pg4').hide();
+      //
+      //
+      $('#Pg3_input').css({
+        width:w_w-52+'px',
+        left:'26px',
+        'margin-top':'20px'
+      })
+      $('#Pg3_next').css({
+        width:w_w-52+'px',
+        left:'26px'
+      });
+      $('#Pg3_next').click(()=>{
+        if($('#Pg3_input').val().length>0){
+            if(parseInt($('#Pg3_input').val())>=30){
+            if(parseInt($('#Pg3_input').val())<=coin){
+              dialog();
+            }else{
+
+            }
+          }else{
+
+          }
+        }else{
+
+        }
+        
+      });
+      $('#Pg2_left').click(()=>{
+        $('#Pg2').show();
+        $('#Pg1').hide();
+        $('#Pg3').hide();
+      })
+      //
+      //
+      $('#Pg2_input1').css({
+        width:w_w/2-36+'px',
+        left:'26px'
+      })
+      $('#Pg2_input2').css({
+        width:w_w/2-36+'px',
+        right:'26px'
+      });
+      $('#Pg2_input3').css({
+        width:w_w-52+'px',
+        left:'26px'
+      })
+      $('#Pg2_left').click(()=>{
+        $('#Pg2_left').fadeOut(100);
+        $('#Pg2_left').fadeIn(100);
+      });
+      $('#Pg2_next').css({
+        width:w_w-52+'px',
+        left:'26px'
+      });
+      $('#Pg2_next').click(()=>{
+       if($('#Pg2_input1').val().length>0 && $('#Pg2_input2').val().length>0 && $('#Pg2_input3').val().length>0){
+         $('#Pg1').hide();
+         $('#Pg2').hide();
+         $('#Pg3').show();
+       }else{
+         alert('계좌정보를 정확히 입력해주세요.');
+       }
+      });
+      onInput=()=>{
+       if($('#Pg2_input1').val().length>0 && $('#Pg2_input2').val().length>0 && $('#Pg2_input3').val().length>0){
+         $('#Pg2_next').css({'background-color':'#000'});
+       }else{
+        $('#Pg2_next').css({'background-color':'rgba(100,100,100,0.5)'}); 
+       }
+      }
+      onInput2=()=>{
+        if($('#Pg3_input').val().length>0){
+            if(parseInt($('#Pg3_input').val())>=30){
+            if(parseInt($('#Pg3_input').val())<=coin){
+              $('#Pg3_txt').text('환전 가능한 다트 갯수입니다.');
+              $('#Pg3_txt').css({'color':'green'});
+              $('#Pg3_next').css({'background-color':'#000'});
+            }else{
+              $('#Pg3_txt').text('보유한 다트 갯수를 초과하였습니다.');
+              $('#Pg3_txt').css({'color':'red'});
+              $('#Pg3_next').css({'background-color':'rgba(100,100,100,0.5)'});
+            }
+          }else{
+            $('#Pg3_txt').text('30개 이상부터 환전 가능합니다.');
+            $('#Pg3_txt').css({'color':'orange'});
+            $('#Pg3_next').css({'background-color':'rgba(100,100,100,0.5)'});
+          }
+        }else{
+          $('#Pg3_txt').text('다트 갯수를 입력해주세요.');
+          $('#Pg3_txt').css({'color':'#000'});
+          $('#Pg3_next').css({'background-color':'rgba(100,100,100,0.5)'});
+        }
+
+      }
+      //
+      //
+      $('.number').css({'line-height':w_h*0.1125+'px','text-align':'center','font-size':'25px','font-weight':'600'});
+      $('#numberx').css({'font-size':'16px'})
+      $('.circle').hide()
+      $('#number1').click(()=>{
+        // $('#number1').fadeOut(100);
+        // $('#number1').fadeIn(100);
+        console.log('gi')
+        _typeNumber('1');
+      });
+      $('#number2').click(()=>{
+        _typeNumber('2');
+      });
+      $('#number3').click(()=>{
+        // $('#number3').fadeOut(100);
+        // $('#number3').fadeIn(100);
+        _typeNumber('3');
+      });
+      $('#number4').click(()=>{
+        // $('#number4').fadeOut(100);
+        // $('#number4').fadeIn(100);
+        _typeNumber('4');
+      });
+      $('#number5').click(()=>{
+        // $('#number5').fadeOut(100);
+        // $('#number5').fadeIn(100);
+        _typeNumber('5');
+      });
+      $('#number6').click(()=>{
+        // $('#number6').fadeOut(100);
+        // $('#number6').fadeIn(100);
+        _typeNumber('6');
+      });
+      $('#number7').click(()=>{
+        // $('#number7').fadeOut(100);
+        // $('#number7').fadeIn(100);
+        _typeNumber('7');
+      });
+      $('#number8').click(()=>{
+        // $('#number8').fadeOut(100);
+        // $('#number8').fadeIn(100);
+        _typeNumber('8');
+      });
+      $('#number9').click(()=>{
+        // $('#number9').fadeOut(100);
+        // $('#number9').fadeIn(100);
+        _typeNumber('9');
+      });
+      $('#number0').click(()=>{
+        // $('#number0').fadeOut(100);
+        // $('#number0').fadeIn(100);
+        _typeNumber('0');
+      });
+      $('#numberx').click(()=>{
+        // $('#numberx').fadeOut(100);
+        // $('#numberx').fadeIn(100);
+        _backSpace();
+      })
+      var _typeNumber= function(n){
+        if(passCode.length<6){
+        passCode+=n;
+        console.log(passCode)
+        showdial(passCode)
+      if(passCode.length==6){
+        let data={
+          user_id:userid,
+          pw:passCode
+        };
+        const obj = {
+          body: JSON.stringify(data),
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          method: 'POST'
+        }
+        fetch(url+'/verifypws', obj)
+        .then((response) => response.json())
+        .then(async (responseJson) => {
+          if(responseJson.status===100){
+            $('#Pg1').hide();
+            $('#Pg2').show();
+            $('#Pg3').hide();
+            coin=responseJson.coin;
+            $('#Pg3_input').attr('placeholder',coin+' 다트 보유');
+          }else if(responseJson.status===200){
+            $('#Pg1_header_s').html('비밀번호가 일치하지 않습니다.</br>다시 입력해 주세요.');
+            console.log('비밀번호가 일치하지 않습니다.\n다시 입력해 주세요.')
+            passCode='';
+            showdial(passCode);
+          }else if(responseJson.status===600){
+            $('#Pg1_header_s').html('잘못된 비밀번호를 </br>지속적으로 입력하셨습니다.</br>5분 후 다시 시도해주세요.');
+            passCode='';
+            showdial(passCode);
+          }else{
+            alert('알 수 없는 오류 발생'+responseJson.status);
+            passCode='';
+            showdial(passCode);
+            console.log(passCode);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      }
+    }
+      }
+      var _backSpace=()=>{
+        passCode=passCode.slice(0,-1);
+        showdial(passCode);
+      }
+      var showdial= (passCode)=>{
+        console.log('asd'+passCode.length)
+        switch(passCode.length){
+          case 0:
+            $('.circle').hide();
+            break;
+          case 1:
+            $('#circle1').show();
+            $('#circle2').hide();
+            $('#circle3').hide();
+            $('#circle4').hide(); 
+            $('#circle5').hide();
+            $('#circle6').hide();
+            break;
+          case 2:
+            $('#circle1').show();
+            $('#circle2').show();
+            $('#circle3').hide();
+            $('#circle4').hide(); 
+            $('#circle5').hide();
+            $('#circle6').hide();
+            break;
+          case 3:
+            $('#circle1').show();
+            $('#circle2').show();
+            $('#circle3').show();
+            $('#circle4').hide(); 
+            $('#circle5').hide();
+            $('#circle6').hide();
+            break;
+          case 4:
+            $('#circle1').show();
+            $('#circle2').show();
+            $('#circle3').show();
+            $('#circle4').show(); 
+            $('#circle5').hide();
+            $('#circle6').hide();
+            break;
+          case 5:
+            $('#circle1').show();
+            $('#circle2').show();
+            $('#circle3').show();
+            $('#circle4').show(); 
+            $('#circle5').show();
+            $('#circle6').hide();
+            break;
+          case 6:
+            $('.circle').show(); 
+            break;
+        }
+      }
+
+      var $parent=$('#parent');
+      var dialog=()=>{
+        $('#Pg3_input').blur();
+        $('.checkdiv').remove();  
+        var div2=$('<div></div>');
+        div2.addClass('checkdiv');  
+        div2.css({'position':'absolute','top':'0px','left':'0px','width':(w_w)+'px','height':(w_h)+'px','background':'rgba(0,0,0,0.1)'});
+        var container=$('<div>정말로 아래 계좌정보로 '+$('#Pg3_input').val()+'다트('+($('#Pg3_input').val()*60).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'원)를(을) 환전하시겠습니까?</br></br>은행:'+$('#Pg2_input1').val()+'</br>예금주:'+$('#Pg2_input2').val()+'</br>계좌번호:'+$('#Pg2_input3').val()+'</div>');
+        container.css({'position':'absolute','width':(w_w-50)+'px',height:'290px',background:'#ffffff',left:'25px',top:(w_h-290)/2+'px','border-radius':'40px','padding':'85px 30px 100px 30px','box-sizing':'border-box','font-size':'17px','color':'#000000'});
+        div2.append(container);
+        var span=$('<div>환전</div>');
+        span.css({'position':'absolute','top':'0','left':'0','width':'100%','height':'80px','line-height':'80px','color':'#000000','text-shadow':'0px 0px 0px rgba(255,255,255,0)','text-align':'center','font-size':'25px','font-weight':'500'});
+        container.append(span);   
+        var yes=$('<div>네</div>');
+        yes.css({'position':'absolute','bottom':'20px','width':(w_w-190)/2+'px','height':'50px','right':'30px','color':'#000000','line-height':'50px','text-align':'center','text-shadow':'0px 0px 0px rgba(255,255,255,0)','font-size':'19px','font-weight':'500'});
+        container.append(yes);
+        var no=$('<div>아니요</div>');
+        no.css({'position':'absolute','bottom':'20px','width':(w_w-70)/2+'px','height':'50px','left':'20px','color':'#000000','line-height':'50px','text-align':'center','text-shadow':'0px 0px 0px rgba(255,255,255,0)','font-size':'18px','font-weight':'500'});
+        container.append(no);  
+        var space1=$('<div></div>');
+        space1.css({'position':'absolute','width':w_w+'px','height':(w_h-290)/2+'px','top':'0px','left':'0px'});div2.append(space1);
+        var space2=$('<div></div>');
+        space2.css({'position':'absolute','width':w_w+'px','height':(w_h-290)/2+'px','bottom':'0px','left':'0px'});div2.append(space2);   
+        space1.click(function(){
+          $('.checkdiv').remove();
+        });
+        space2.click(function(){
+          $('.checkdiv').remove();
+        });    
+        $('body').append(div2);
+        yes.click(function(){
+          exchange();
+        });
+        no.click(function(){
+          $('.checkdiv').remove();    
+        }); 
+      }
+      var exchange=()=>{
+        $('.checkdiv').remove();
+        let data={
+          user_id:userid,
+          pw:passCode,
+          bank:$('#Pg2_input1').val(),
+          name:$('#Pg2_input2').val(),
+          number:$('#Pg2_input3').val(),
+          coin:parseInt($('#Pg3_input').val())
+        };
+        const obj = {
+          body: JSON.stringify(data),
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          method: 'POST'
+        }
+        fetch(`${url}/exchanges`, obj)
+        .then((response) => response.json())
+        .then(async (responseJson) => {
+          if(responseJson.status===100){
+            $('#Pg1').hide();
+            $('#Pg2').hide();
+            $('#Pg3').hide();
+            $('#Pg4').show();
+          }else{
+            alert('Exchange errorCode:'+responseJson.status);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      }   
+    });    
+  </script>   
+</body>
+</html>
